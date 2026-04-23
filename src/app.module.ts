@@ -7,16 +7,12 @@ import { PropertiesModule } from './properties/properties.module';
 
 @Module({
   imports: [
-   TypeOrmModule.forRoot({
-  type: 'postgres',
-  host: 'localhost',
-  port: 5433,
-  username: 'postgres',
-  password: '1234',
-  database: 'realestate',
-  autoLoadEntities: true,
-  synchronize: true,
-}),
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      url: process.env.DATABASE_URL,
+      autoLoadEntities: true,
+      synchronize: true,
+    }),
 
     AuthModule,
     UsersModule,
