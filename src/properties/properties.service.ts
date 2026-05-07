@@ -1,16 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
-import { Property } from './property.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
+import { Property } from './property.entity';
 
 @Injectable()
 export class PropertiesService {
+
   constructor(
     @InjectRepository(Property)
     private repo: Repository<Property>,
   ) {}
 
-  create(data: Partial<Property>) {
+  create(data: any) {
     const property = this.repo.create(data);
     return this.repo.save(property);
   }
@@ -20,10 +22,14 @@ export class PropertiesService {
   }
 
   findOne(id: number) {
-    return this.repo.findOne({ where: { id } });
+    return this.repo.findOneBy({ id });
   }
 
   remove(id: number) {
     return this.repo.delete(id);
+  }
+
+  update(id: number, data: any) {
+    return this.repo.update(id, data);
   }
 }
